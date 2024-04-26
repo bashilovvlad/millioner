@@ -1,0 +1,49 @@
+.buttons {
+  display: flex;
+  padding: 20px;
+}
+
+.main {
+  background: #fff;
+  width: 100%;
+  height: 100vh;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  background: #fff;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.leftSide {
+  background: #d0d0d8;
+}
+
+.rightSide {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.moneyItem {
+  margin-bottom: 5px;
+  border: 1px solid #d0d0d8;
+  width: 250px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+}
+
+.activeMoneyItem {
+  border-color: #ff8b37;
+}
+
+.passedMoneyItem {
+  color: #ccc;
+}

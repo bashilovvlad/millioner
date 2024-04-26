@@ -1,0 +1,9 @@
+.imageHolder {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.object {
+  object-fit: cover;
+  object-position: center;
+}
