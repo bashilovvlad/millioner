@@ -40,7 +40,7 @@ export default function Home() {
       timeout: 0,
     },
     {
-      cb: (answerIndex: number, arg: number) => {
+      cb: (answerIndex: number) => {
         setSelected(null);
 
         const { isCorrect, correctAnswer, next } =
