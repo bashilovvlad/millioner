@@ -1,7 +1,6 @@
 import styles from "./page.module.css";
 
-import { BackgroundImage } from "./ui/BackgroundImage";
-import { ButtonLink } from "./ui";
+import { BackgroundImage, ButtonLink } from "./ui";
 
 export default function Home() {
   return (

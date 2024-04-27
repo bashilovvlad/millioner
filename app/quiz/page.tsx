@@ -1,15 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 
-import { AnswerButton } from "../ui";
+import styles from "./page.module.css";
+
 import { questions } from "../lib/questions";
 
 import { MillionaireGame } from "../lib/Game";
-import { MoneySlot } from "../ui/MoneySlot";
-import { Congrats } from "../ui/Congrats";
+import { AnswerButton, MoneySlot, Congrats } from "../ui";
 
 enum PREFIXES {
   A,
