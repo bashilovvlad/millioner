@@ -1,13 +1,11 @@
-import Link from "next/link";
-
 import styles from "./page.module.css";
+import { ButtonLink } from "./ui";
 
 export default function NotFound() {
   return (
     <div className={styles.notFound}>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-      <Link href="/">Return Home</Link>
+      <h2 className={styles.title}>Not found </h2>
+      <ButtonLink href="/" label="Back to main" />
     </div>
   );
 }

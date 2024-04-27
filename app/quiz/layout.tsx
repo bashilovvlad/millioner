@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import styles from "./page.module.css";
 
 export default function QuizLayout({
@@ -7,9 +5,5 @@ export default function QuizLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <main className={styles.main}>
-      <div className={styles.wrapper}>{children}</div>;
-    </main>
-  );
+  return <main className={styles.main}>{children}</main>;
 }

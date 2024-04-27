@@ -1,4 +1,12 @@
-export const questions = [
+interface IQuestion {
+    question: string;
+    answers: string[];
+    correctAnswer: number;
+    money: number;
+    id: number;
+}
+
+export const questions: IQuestion[] = [
     {
         question: "What is the capital of France?",
         answers: ["Paris", "London", "Berlin", "Rome"],

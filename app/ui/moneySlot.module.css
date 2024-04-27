@@ -1,0 +1,118 @@
+/* .moneyItem {
+  margin-bottom: 5px;
+  border: 1px solid #d0d0d8;
+  width: 250px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+} */
+
+.moneyItem {
+  flex: 0 0 40px;
+  border-top: 1px solid #d0d0d8;
+  border-bottom: 1px solid #d0d0d8;
+  position: relative;
+  background: #fff;
+  margin-bottom: 30px;
+  min-width: 240px;
+  max-width: 390px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1c21;
+  font-size: 20px;
+  margin: 0 35px 5px;
+  z-index: 2;
+}
+
+.moneyItem:before {
+  display: block;
+  content: "";
+  background: #fff;
+  border-top: 1px solid #d0d0d8;
+  border-left: 1px solid #d0d0d8;
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  transform: rotate(-45deg);
+  z-index: 0;
+  top: 6px;
+  left: -11px;
+}
+
+.moneyItem:after {
+  display: block;
+  content: "";
+  background: #fff;
+  border-top: 1px solid #d0d0d8;
+  border-right: 1px solid #d0d0d8;
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  transform: rotate(45deg);
+  z-index: 0;
+  top: 6px;
+  right: -11px;
+}
+
+/* .button:hover {
+  border-color: #ff8b37;
+}
+
+.button:hover:before,
+.button:hover:after {
+  border-color: #ff8b37;
+} */
+
+/* .button:hover .button_line {
+  background: #ff8b37;
+} */
+
+.moneyItem.passedMoneyItem {
+  color: #ccc;
+}
+
+.moneyItem.activeMoneyItem {
+  border-color: #ff8b37;
+}
+
+.moneyItem.activeMoneyItem:before,
+.moneyItem.activeMoneyItem:after {
+  border-color: #ff8b37;
+}
+
+.moneyItem.activeMoneyItem .moneyItem_line {
+  background: #ff8b37;
+}
+
+.moneyItem_texHolder {
+  background: #fff;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moneyItem_label {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  margin-left: 8px;
+  text-wrap: nowrap;
+}
+
+.moneyItem_line {
+  display: block;
+  position: absolute;
+  content: "";
+  height: 1px;
+  left: -65px;
+  right: -65px;
+  background: #d0d0d8;
+  z-index: -1;
+}

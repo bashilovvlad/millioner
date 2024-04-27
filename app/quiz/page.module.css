@@ -1,49 +1,58 @@
-.buttons {
-  display: flex;
-  padding: 20px;
-}
-
 .main {
-  background: #fff;
+  background: #f5f5f7;
   width: 100%;
   height: 100vh;
 }
 
 .wrapper {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1000px 370px;
   background: #fff;
-  max-width: 1440px;
+  max-width: 1370px;
   margin: 0 auto;
   height: 100%;
 }
 
 .leftSide {
-  background: #d0d0d8;
+  background: #f5f5f7;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .rightSide {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  background: #fff;
+}
+
+.slotsHolder {
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
-.moneyItem {
-  margin-bottom: 5px;
-  border: 1px solid #d0d0d8;
-  width: 250px;
-  height: 50px;
+.mainHolder {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #000;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 80px;
 }
 
-.activeMoneyItem {
-  border-color: #ff8b37;
+.question {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 37.12px;
+  color: #1c1c21;
 }
 
-.passedMoneyItem {
-  color: #ccc;
+.buttons {
+  display: grid;
+  grid-template-columns: 400px 400px;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }

@@ -1,0 +1,17 @@
+.congrats {
+  background: linear-gradient(to top left, #fff3eb 50%, #fff 50%);
+
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.textBlock {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

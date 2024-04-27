@@ -3,51 +3,13 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
-import { clsx } from "clsx";
 
-import { Button } from "../ui";
+import { AnswerButton } from "../ui";
 import { questions } from "../lib/questions";
 
-const maxQuestions = 12; // Максимальна кількість питань
-
-class MillionaireGame {
-  private questionNumber: number = 0;
-  private money: number = 0;
-
-  constructor() {
-    // усі питання
-  }
-
-  public getCurrentQuestion() {
-    return questions[this.questionNumber];
-  }
-
-  public getMoney() {
-    return this.money;
-  }
-
-  public resetGame() {
-    this.questionNumber = 0;
-    this.money = 0;
-  }
-
-  public checkAnswer(answerIndex: number): boolean {
-    if (answerIndex === questions[this.questionNumber].correctAnswer) {
-      if (this.questionNumber < maxQuestions) {
-        this.money = questions[this.questionNumber].money;
-        this.questionNumber++;
-      }
-      return true;
-    } else {
-      alert("Wrong answer. Game over.");
-      this.money = 0;
-      this.questionNumber = 0;
-      return false;
-    }
-  }
-}
-
-const game = new MillionaireGame();
+import { MillionaireGame } from "../lib/Game";
+import { MoneySlot } from "../ui/MoneySlot";
+import { Congrats } from "../ui/Congrats";
 
 enum PREFIXES {
   A,
@@ -56,62 +18,137 @@ enum PREFIXES {
   D,
 }
 
+const game = new MillionaireGame(12, questions);
+
 export default function Home() {
   const router = useRouter();
   const [money, setMoney] = useState(game.getMoney());
   const currentQuestion = game.getCurrentQuestion();
 
-  function checkAnswer(answerIndex: number): void {
-    if (game.checkAnswer(answerIndex)) {
-      setMoney(game.getMoney());
-    } else {
-      setMoney(0);
-    }
+  const [selected, setSelected] = useState<null | number>(null);
+  const [correct, setCorrect] = useState<null | number>(null);
+  const [incorrect, setIncorrect] = useState<null | number>(null);
+  const [waiting, setWaiting] = useState<boolean>(false);
+
+  const arr = [
+    {
+      cb: (answerIndex: number) => {
+        setSelected(answerIndex);
+        setWaiting(true);
+        return answerIndex;
+      },
+      timeout: 0,
+    },
+    {
+      cb: (answerIndex: number, arg: number) => {
+        setSelected(null);
+
+        const { isCorrect, correctAnswer, next } =
+          game.checkAnswer(answerIndex);
+
+        if (isCorrect) {
+          setCorrect(answerIndex);
+        } else {
+          setCorrect(correctAnswer);
+          setIncorrect(answerIndex);
+        }
+
+        return { isCorrect, correctAnswer, next };
+      },
+      timeout: 1000,
+    },
+    {
+      cb: (
+        answerIndex: number,
+        {
+          isCorrect,
+          correctAnswer,
+          next,
+        }: { isCorrect: boolean; correctAnswer: number; next: () => void }
+      ) => {
+        setSelected(null);
+        setCorrect(null);
+        setIncorrect(null);
+        setWaiting(false);
+
+        if (isCorrect) {
+          next();
+          setMoney(game.getMoney());
+        } else {
+          router.refresh();
+          next();
+          setMoney(0);
+        }
+      },
+      timeout: 1000,
+    },
+  ];
+
+  const run = async (answerIndex: number) => {
+    let p = Promise.resolve();
+
+    arr.forEach((i) => {
+      p = p.then((arg) => {
+        return new Promise((res) => {
+          setTimeout(() => {
+            const result = i.cb(answerIndex, arg);
+            res(result);
+          }, i.timeout);
+        });
+      });
+    });
+  };
+
+  async function checkAnswer(answerIndex: number): Promise<void> {
+    await run(answerIndex);
   }
+
+  const handleClick = () => {
+    game.resetGame();
+    router.refresh();
+  };
 
   return (
     <>
       {!currentQuestion ? (
-        <>
-          <p>Congratulations! You have won $1,000,000!</p>
-          <Button
-            label={"Reset game"}
-            onClick={() => {
-              game.resetGame();
-              router.refresh();
-            }}
-          />
-        </>
+        <Congrats money={money} onClick={handleClick} />
       ) : (
-        <>
+        <div className={styles.wrapper}>
           <div className={styles.leftSide}>
-            <p>Money: ${money}</p>
-            <p>Question: {currentQuestion.question}</p>
-            {currentQuestion?.answers.map((item, i) => (
-              <Button
-                key={i}
-                prefix={PREFIXES[i]}
-                label={item}
-                onClick={() => checkAnswer(i)}
-              />
-            ))}
-          </div>
-
-          <div className={styles.rightSide}>
-            {questions.map((q, i) => (
-              <div
-                key={i}
-                className={clsx(
-                  styles.moneyItem,
-                  currentQuestion.id === q.id && styles.activeMoneyItem,
-                  i < currentQuestion.id && styles.passedMoneyItem
-                )}
-              >
-                ${q.money}
+            <div className={styles.mainHolder}>
+              <p className={styles.question}>{currentQuestion.question}</p>
+              <div className={styles.buttons}>
+                {currentQuestion?.answers.map((item, i) => (
+                  <AnswerButton
+                    key={i}
+                    prefix={PREFIXES[i]}
+                    label={item}
+                    onClick={() => {
+                      if (!waiting) {
+                        checkAnswer(i);
+                      }
+                    }}
+                    selected={selected === i}
+                    correct={correct === i}
+                    incorrect={incorrect === i}
+                  />
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </>
+          <div className={styles.rightSide}>
+            <div className={styles.slotsHolder}>
+              {questions.slice(0, game.getMaxquestions()).map((q, i) => (
+                <MoneySlot
+                  key={i}
+                  active={currentQuestion.id === q.id}
+                  passed={i < currentQuestion.id}
+                  label={q.money}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

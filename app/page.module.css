@@ -119,8 +119,7 @@
   }
 } */
 
-.main,
-.notFound {
+.main {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -128,15 +127,22 @@
   position: relative;
 }
 
-.playButton {
-  width: 296px;
-  height: 64px;
-  background: #ff8b37;
-  border: none;
-  color: #fff;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-flex;
-  justify-content: center;
+.notFound {
+  height: 100vh;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.income {
+  width: 600px;
+}
+
+.title {
+  margin-bottom: 64px;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 64.96px;
+  text-align: left;
 }
