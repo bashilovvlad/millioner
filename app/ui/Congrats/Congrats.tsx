@@ -1,7 +1,7 @@
 import styles from "./congrats.module.css";
 
-import { BackgroundImage } from "./BackgroundImage";
-import { Button } from "./Button";
+import { BackgroundImage } from "../BackgroundImage/BackgroundImage";
+import { Button } from "../Button/Button";
 
 interface ICongratsProps {
   money: number;
