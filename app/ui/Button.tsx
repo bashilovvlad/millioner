@@ -1,7 +1,6 @@
 import styles from "./button.module.css";
 
 import Link from "next/link";
-
 import { clsx } from "clsx";
 
 interface IAnswerButtonProps {
