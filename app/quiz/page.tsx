@@ -88,10 +88,10 @@ export default function Home() {
     let p = Promise.resolve();
 
     arr.forEach((i) => {
-      p = p.then((arg) => {
+      p = p.then((arg: any) => {
         return new Promise((res) => {
           setTimeout(() => {
-            const result = i.cb(answerIndex, arg);
+            const result: any = i.cb(answerIndex, arg);
             res(result);
           }, i.timeout);
         });
