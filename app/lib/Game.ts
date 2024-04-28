@@ -60,7 +60,6 @@ export class MillionaireGame {
                 isCorrect: false,
                 correctAnswer: this.questions[this.questionNumber].correctAnswer,
                 next: () => {
-                    alert('Fin')
                     this.money = 0;
                     this.questionNumber = 0;
                 }

@@ -24,7 +24,9 @@ export const Congrats: React.FC<ICongratsProps> = ({ money, onClick }) => {
         height={width < 768 ? 190 : 370}
       />
       <div className={styles.income}>
-        <h2 className={styles.title}>Congratulations! You have won {money}!</h2>
+        <h2 className={styles.title}>
+          Congratulations! You have won ${money.toLocaleString()}!
+        </h2>
         <Button label="Play again" onClick={onClick} />
       </div>
     </main>

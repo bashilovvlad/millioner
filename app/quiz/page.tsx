@@ -22,10 +22,10 @@ const game = new MillionaireGame(12, questions);
 
 export default function Home() {
   const router = useRouter();
-  const [money, setMoney] = useState(game.getMoney());
-  const [active, setActive] = useState(false);
   const currentQuestion = game.getCurrentQuestion();
 
+  const [money, setMoney] = useState(game.getMoney());
+  const [active, setActive] = useState<boolean>(false);
   const [selected, setSelected] = useState<null | number>(null);
   const [correct, setCorrect] = useState<null | number>(null);
   const [incorrect, setIncorrect] = useState<null | number>(null);
@@ -61,11 +61,7 @@ export default function Home() {
     {
       resolver: (
         answerIndex: number,
-        {
-          isCorrect,
-          correctAnswer,
-          next,
-        }: { isCorrect?: boolean; correctAnswer?: number; next: () => void }
+        { isCorrect, next }: { isCorrect?: boolean; next: () => void }
       ) => {
         setSelected(null);
         setCorrect(null);
@@ -76,7 +72,7 @@ export default function Home() {
           next();
           setMoney(game.getMoney());
         } else {
-          router.refresh();
+          router.push(`/fail?win=${money}`);
           next();
           setMoney(0);
         }
