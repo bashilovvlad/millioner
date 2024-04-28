@@ -20,24 +20,71 @@
   background: #e87928;
 }
 
-.button {
-  height: 71px;
-  border-top: 1px solid #d0d0d8;
-  border-bottom: 1px solid #d0d0d8;
-  position: relative;
-  background: #fff;
-  margin-bottom: 30px;
-  min-width: 220px;
-  max-width: 390px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #1c1c21;
-  font-size: 20px;
-  margin: 0 35px;
-  z-index: 2;
-  cursor: pointer;
+/* Mobile */
+@media (max-width: 700px) {
+  .button {
+    height: 71px;
+    border-top: 1px solid #d0d0d8;
+    border-bottom: 1px solid #d0d0d8;
+    position: relative;
+    background: #fff;
+    min-width: 270px;
+    max-width: 280px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c1c21;
+    font-size: 20px;
+    margin: 0px 35px 8px;
+    z-index: 2;
+    cursor: pointer;
+  }
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .button {
+    height: 71px;
+    border-top: 1px solid #d0d0d8;
+    border-bottom: 1px solid #d0d0d8;
+    position: relative;
+    background: #fff;
+    margin-bottom: 30px;
+    min-width: 270px;
+    max-width: 390px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c1c21;
+    font-size: 20px;
+    margin: 0 35px;
+    z-index: 2;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 1121px) {
+  .button {
+    height: 71px;
+    border-top: 1px solid #d0d0d8;
+    border-bottom: 1px solid #d0d0d8;
+    position: relative;
+    background: #fff;
+    margin-bottom: 30px;
+    min-width: 220px;
+    max-width: 390px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c1c21;
+    font-size: 20px;
+    margin: 0 35px;
+    z-index: 2;
+    cursor: pointer;
+  }
 }
 
 .button.selected,

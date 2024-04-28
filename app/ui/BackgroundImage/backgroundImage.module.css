@@ -7,3 +7,10 @@
   object-fit: cover;
   object-position: center;
 }
+
+.relative {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}

@@ -30,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/__tests__/page.test.jsx"
+    "app/__tests__/page.test.jsx",
+    "jest.config.js"
   ],
   "exclude": ["node_modules"]
 }

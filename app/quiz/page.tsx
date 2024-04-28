@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { clsx } from "clsx";
 
 import styles from "./page.module.css";
 
@@ -22,6 +23,7 @@ const game = new MillionaireGame(12, questions);
 export default function Home() {
   const router = useRouter();
   const [money, setMoney] = useState(game.getMoney());
+  const [active, setActive] = useState(false);
   const currentQuestion = game.getCurrentQuestion();
 
   const [selected, setSelected] = useState<null | number>(null);
@@ -29,9 +31,9 @@ export default function Home() {
   const [incorrect, setIncorrect] = useState<null | number>(null);
   const [waiting, setWaiting] = useState<boolean>(false);
 
-  const arr = [
+  const steps = [
     {
-      cb: (answerIndex: number) => {
+      resolver: (answerIndex: number) => {
         setSelected(answerIndex);
         setWaiting(true);
         return answerIndex;
@@ -39,7 +41,7 @@ export default function Home() {
       timeout: 0,
     },
     {
-      cb: (answerIndex: number) => {
+      resolver: (answerIndex: number) => {
         setSelected(null);
 
         const { isCorrect, correctAnswer, next } =
@@ -57,13 +59,13 @@ export default function Home() {
       timeout: 1000,
     },
     {
-      cb: (
+      resolver: (
         answerIndex: number,
         {
           isCorrect,
           correctAnswer,
           next,
-        }: { isCorrect: boolean; correctAnswer: number; next: () => void }
+        }: { isCorrect?: boolean; correctAnswer?: number; next: () => void }
       ) => {
         setSelected(null);
         setCorrect(null);
@@ -83,28 +85,28 @@ export default function Home() {
     },
   ];
 
-  const run = async (answerIndex: number) => {
-    let p = Promise.resolve();
+  const run = async (answerIndex: number): Promise<void> => {
+    let promise = Promise.resolve();
 
-    arr.forEach((i) => {
-      p = p.then((arg: any) => {
+    steps.forEach((step) => {
+      promise = promise.then((arg: any) => {
         return new Promise((res) => {
           setTimeout(() => {
-            const result: any = i.cb(answerIndex, arg);
+            const result: any = step.resolver(answerIndex, arg);
             res(result);
-          }, i.timeout);
+          }, step.timeout);
         });
       });
     });
   };
 
-  async function checkAnswer(answerIndex: number): Promise<void> {
-    await run(answerIndex);
-  }
-
   const handleClick = () => {
     game.resetGame();
     router.refresh();
+  };
+
+  const handleOpenMoney = () => {
+    setActive((state) => !state);
   };
 
   return (
@@ -113,6 +115,12 @@ export default function Home() {
         <Congrats money={money} onClick={handleClick} />
       ) : (
         <div className={styles.wrapper}>
+          <div
+            className={clsx(styles.openerOuter, active && styles.active)}
+            onClick={handleOpenMoney}
+          >
+            <button className={styles.openerInner}></button>
+          </div>
           <div className={styles.leftSide}>
             <div className={styles.mainHolder}>
               <p className={styles.question}>{currentQuestion.question}</p>
@@ -124,7 +132,7 @@ export default function Home() {
                     label={item}
                     onClick={() => {
                       if (!waiting) {
-                        checkAnswer(i);
+                        run(i);
                       }
                     }}
                     selected={selected === i}
@@ -135,7 +143,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={styles.rightSide}>
+          <div className={clsx(styles.rightSide, active && styles.active)}>
             <div className={styles.slotsHolder}>
               {questions.slice(0, game.getMaxquestions()).map((q, i) => (
                 <MoneySlot

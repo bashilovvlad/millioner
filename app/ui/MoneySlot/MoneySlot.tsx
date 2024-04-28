@@ -19,7 +19,9 @@ export const MoneySlot: React.FC<IMoneySlotProps> = ({
         passed && styles.passedMoneyItem
       )}
     >
-      <div className={styles.moneyItem_texHolder}>${label}</div>
+      <div className={styles.moneyItem_texHolder}>
+        ${label.toLocaleString("en-US")}
+      </div>
       <span className={styles.moneyItem_line}></span>
     </div>
   );
