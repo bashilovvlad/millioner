@@ -1,11 +1,5 @@
 {
   "plugins": ["@typescript-eslint"],
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
-  ],
+  "extends": ["airbnb", "airbnb/hooks"],
   "parser": "@typescript-eslint/parser"
 }
