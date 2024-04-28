@@ -1,69 +1,66 @@
 
-interface IQuestion {
+export interface IQuestion {
     question: string;
     answers: string[];
     correctAnswer: number;
-    money: number;
+    reward: number;
     id: number;
 }
 
-interface IResult {
-    isCorrect: boolean,
-    correctAnswer: number,
-    next: () => void
-}
-
 export class MillionaireGame {
-    private questionNumber: number = 0;
-    private money: number = 0;
-    private maxQuestions: number = 0;
-    private questions: IQuestion[] = [];
+    questionNumber: number = 0;
+    reward: number = 0;
+    maxQuestions: number = 0;
+    questions: IQuestion[] = [];
+
+    continue: boolean = false;
 
     constructor(maxQuestions: number, questions: IQuestion[]) {
         this.maxQuestions = maxQuestions;
         this.questions = questions.slice(0, maxQuestions);
+        this.continue = true
     }
 
-    public getCurrentQuestion() {
+    getCurrentQuestion() {
         return this.questions[this.questionNumber];
     }
 
-    public getMoney() {
-        return this.money;
+    getReward() {
+        return this.getFinish() ? this.getCurrentQuestion().reward : this.reward
     }
 
-    public resetGame() {
+    resetGame() {
         this.questionNumber = 0;
-        this.money = 0;
+        this.reward = 0;
+        this.continue = true;
     }
 
-    public getMaxquestions() {
+    getMaxquestions() {
         return this.maxQuestions;
     }
 
-    public checkAnswer(answerIndex: number): IResult {
-        if (answerIndex === this.questions[this.questionNumber].correctAnswer) {
+    getQuestions() {
+        return this.questions
+    }
 
-            return {
-                isCorrect: true,
-                correctAnswer: this.questions[this.questionNumber].correctAnswer,
-                next: () => {
-                    if (this.questionNumber < this.maxQuestions) {
-                        this.money = this.questions[this.questionNumber].money;
-                        this.questionNumber++;
-                    }
-                }
-            };
-        } else {
+    setContinue(key: boolean) {
+        this.continue = key
+    }
 
-            return {
-                isCorrect: false,
-                correctAnswer: this.questions[this.questionNumber].correctAnswer,
-                next: () => {
-                    this.money = 0;
-                    this.questionNumber = 0;
-                }
-            };
+    getContinue() {
+        return this.continue
+    }
+
+    getFinish() {
+        return this.questionNumber === this.maxQuestions - 1
+    }
+
+    next() {
+        if (this.questionNumber < this.maxQuestions) {
+            this.reward = this.getCurrentQuestion().reward;
+            this.questionNumber++;
+            return true
         }
+        return false
     }
 }

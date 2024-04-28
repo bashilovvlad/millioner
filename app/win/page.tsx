@@ -1,14 +1,14 @@
 "use client";
-import styles from "./page.module.css";
 
 import { useContext } from "react";
+import styles from "./page.module.css";
 import { RewardContext } from "../app_context";
 
 import { BackgroundImage, ButtonLink } from "../ui";
 
 import { useWindowSize } from "../hooks";
 
-export default function Fail() {
+export default function Win() {
   const { width = 0 } = useWindowSize();
 
   const context = useContext(RewardContext);
@@ -25,9 +25,9 @@ export default function Fail() {
         height={width < 768 ? 190 : 370}
       />
       <div className={styles.income}>
-        <h1 className={styles.title}>
-          You have won ${reward?.toLocaleString()}!
-        </h1>
+        <h2 className={styles.title}>
+          Congratulations! You have won ${reward?.toLocaleString()}!
+        </h2>
         <ButtonLink href="/quiz" label="Play again" />
       </div>
     </main>
