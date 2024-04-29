@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 
 import styles from "./page.module.css";
 
-import { questions } from "../lib/questions";
+import data from "../../public/data.json";
 
 import { MillionaireGame } from "../lib/Game";
 import { AnswerButton, MoneySlot } from "../ui";
@@ -22,7 +22,7 @@ enum PREFIXES {
 
 export default function Home() {
   const context = useContext(RewardContext);
-  const [game, setGame] = useState(new MillionaireGame(12, questions));
+  const [game, setGame] = useState(new MillionaireGame(12, data));
   const router = useRouter();
   const currentQuestion = game.getCurrentQuestion();
 
