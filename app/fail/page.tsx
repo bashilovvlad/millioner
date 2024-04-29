@@ -12,6 +12,7 @@ export default function Fail() {
   const { width = 0 } = useWindowSize();
 
   const context = useContext(RewardContext);
+  // eslint-disable-next-line
   const reward = context ? context.reward : 0;
 
   return (

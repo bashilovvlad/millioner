@@ -42,8 +42,11 @@ export const AnswerButton: React.FC<IAnswerButtonProps> = ({
     <div
       className={clsx(
         styles.button,
+        // eslint-disable-next-line
         selected && styles.selected,
+        // eslint-disable-next-line
         correct && styles.correct,
+        // eslint-disable-next-line
         incorrect && styles.incorrect
       )}
       onClick={onClick}
