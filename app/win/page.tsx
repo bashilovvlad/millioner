@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useContext } from "react";
-import styles from "./page.module.css";
-import { RewardContext } from "../app_context";
+import React, { useContext } from 'react';
+import styles from './page.module.css';
+import { RewardContext } from '../app_context';
 
-import { BackgroundImage, ButtonLink } from "../ui";
+import { BackgroundImage, ButtonLink } from '../ui';
 
-import { useWindowSize } from "../hooks";
+import { useWindowSize } from '../hooks';
 
-export default function Win() {
+const Win = () => {
   const { width = 0 } = useWindowSize();
 
   const context = useContext(RewardContext);
@@ -19,18 +19,22 @@ export default function Win() {
     <main className={styles.main}>
       <BackgroundImage
         image={{
-          src: "/hand.svg",
-          alt: "Hello my friend",
+          src: '/hand.svg',
+          alt: 'Hello my friend',
         }}
         width={width < 768 ? 290 : 630}
         height={width < 768 ? 190 : 370}
       />
       <div className={styles.income}>
         <h2 className={styles.title}>
-          Congratulations! You have won ${reward?.toLocaleString()}!
+          Congratulations! You have won $
+          {reward?.toLocaleString()}
+          !
         </h2>
         <ButtonLink href="/quiz" label="Play again" />
       </div>
     </main>
   );
-}
+};
+
+export default Win;

@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useCallback, useState, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { clsx } from "clsx";
+import React, { useCallback, useState, useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import { clsx } from 'clsx';
 
-import styles from "./page.module.css";
+import styles from './page.module.css';
 
-import data from "../../public/data.json";
+import data from '../../public/data.json';
 
-import { MillionaireGame } from "../lib/Game";
-import { AnswerButton, MoneySlot } from "../ui";
+import { MillionaireGame } from '../lib/Game';
+import { AnswerButton, MoneySlot } from '../ui';
 
-import { RewardContext } from "../app_context";
+import { RewardContext } from '../app_context';
 
 enum PREFIXES {
   A,
@@ -20,9 +20,9 @@ enum PREFIXES {
   D,
 }
 
-export default function Home() {
+const Quiz = () => {
   const context = useContext(RewardContext);
-  const [game, setGame] = useState(new MillionaireGame(12, data));
+  const [game] = useState(new MillionaireGame(12, data));
   const router = useRouter();
   const currentQuestion = game.getCurrentQuestion();
 
@@ -43,7 +43,7 @@ export default function Home() {
     },
     {
       resolver: (answerIndex: number) => {
-        const correctAnswer = currentQuestion.correctAnswer;
+        const { correctAnswer } = currentQuestion;
 
         if (correctAnswer !== answerIndex) {
           setIncorrect(answerIndex);
@@ -56,12 +56,12 @@ export default function Home() {
       timeout: 1000,
     },
     {
-      resolver: (answerIndex: number) => {
+      resolver: () => {
         context.setReward(game.getReward());
 
         if (game.getFinish()) {
           game.resetGame();
-          router.push(`/win`);
+          router.push('/win');
           return;
         }
 
@@ -73,7 +73,7 @@ export default function Home() {
           setWaiting(false);
         } else {
           game.resetGame();
-          router.push(`/fail`);
+          router.push('/fail');
         }
       },
       timeout: 1000,
@@ -85,9 +85,9 @@ export default function Home() {
       await previousPromise;
       return new Promise((resolve) => {
         setTimeout(() => {
-          const result = step.resolver(answerIndex);
+          step.resolver(answerIndex);
 
-          resolve(result);
+          resolve();
         }, step.timeout);
       });
     }, Promise.resolve());
@@ -106,11 +106,13 @@ export default function Home() {
 
   return (
     <div className={styles.wrapper}>
-      <div
-        className={clsx(styles.openerOuter, menuOpened && styles.active)}
-        onClick={handleOpenRewards}
-      >
-        <button className={styles.openerInner}></button>
+      <div className={clsx(styles.openerOuter, menuOpened && styles.active)}>
+        <button
+          aria-label="opener"
+          type="button"
+          className={styles.openerInner}
+          onClick={handleOpenRewards}
+        />
       </div>
       <div className={styles.leftSide}>
         <div className={styles.mainHolder}>
@@ -118,7 +120,7 @@ export default function Home() {
           <div className={styles.buttons}>
             {currentQuestion?.answers.map((answer, i) => (
               <AnswerButton
-                key={i}
+                key={`${answer}`}
                 prefix={PREFIXES[i]}
                 label={answer}
                 onClick={handleAnswerClick(i)}
@@ -134,7 +136,7 @@ export default function Home() {
         <div className={styles.slotsHolder}>
           {game.getQuestions().map((question, i) => (
             <MoneySlot
-              key={i}
+              key={question.reward}
               active={currentQuestion.id === question.id}
               passed={i < currentQuestion.id}
               label={question.reward}
@@ -144,4 +146,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Quiz;

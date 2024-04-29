@@ -1,9 +1,11 @@
-import styles from "./page.module.css";
+import React from 'react';
 
-export default function QuizLayout({
+import styles from './page.module.css';
+
+const QuizLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
-  return <main className={styles.main}>{children}</main>;
-}
+}>) => <main className={styles.main}>{children}</main>;
+
+export default QuizLayout;

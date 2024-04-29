@@ -1,7 +1,7 @@
-import styles from "./button.module.css";
-
-import Link from "next/link";
-import { clsx } from "clsx";
+import React from 'react';
+import Link from 'next/link';
+import { clsx } from 'clsx';
+import styles from './button.module.css';
 
 interface IAnswerButtonProps {
   label: string;
@@ -22,13 +22,11 @@ interface IButtonProps {
   onClick: () => void;
 }
 
-export const Button: React.FC<IButtonProps> = ({ onClick, label }) => {
-  return (
-    <button type="button" onClick={onClick} className={styles.baseButton}>
-      {label}
-    </button>
-  );
-};
+export const Button: React.FC<IButtonProps> = ({ onClick, label }) => (
+  <button type="button" onClick={onClick} className={styles.baseButton}>
+    {label}
+  </button>
+);
 
 export const AnswerButton: React.FC<IAnswerButtonProps> = ({
   label,
@@ -37,33 +35,30 @@ export const AnswerButton: React.FC<IAnswerButtonProps> = ({
   selected,
   correct,
   incorrect,
-}) => {
-  return (
-    <div
-      className={clsx(
-        styles.button,
-        // eslint-disable-next-line
-        selected && styles.selected,
-        // eslint-disable-next-line
-        correct && styles.correct,
-        // eslint-disable-next-line
-        incorrect && styles.incorrect
-      )}
-      onClick={onClick}
-    >
-      <div className={styles.button_texHolder}>
-        <span className={styles.button_prefix}>{prefix}</span>
-        <span className={styles.button_label}>{label}</span>
-      </div>
-      <span className={styles.button_line}></span>
+}) => (
+  <button
+    type="button"
+    className={clsx(
+      styles.button,
+      // eslint-disable-next-line
+      selected && styles.selected,
+      // eslint-disable-next-line
+      correct && styles.correct,
+      // eslint-disable-next-line
+      incorrect && styles.incorrect
+    )}
+    onClick={onClick}
+  >
+    <div className={styles.button_texHolder}>
+      <span className={styles.button_prefix}>{prefix}</span>
+      <span className={styles.button_label}>{label}</span>
     </div>
-  );
-};
+    <span className={styles.button_line} />
+  </button>
+);
 
-export const ButtonLink: React.FC<IButtonLinkProps> = ({ href, label }) => {
-  return (
-    <Link href={href} className={styles.baseButton}>
-      {label}
-    </Link>
-  );
-};
+export const ButtonLink: React.FC<IButtonLinkProps> = ({ href, label }) => (
+  <Link href={href} className={styles.baseButton}>
+    {label}
+  </Link>
+);

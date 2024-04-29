@@ -1,19 +1,22 @@
-"use client";
-import styles from "./page.module.css";
+'use client';
 
-import { BackgroundImage, ButtonLink } from "./ui";
+import React from 'react';
 
-import { useWindowSize } from "./hooks";
+import styles from './page.module.css';
 
-export default function Home() {
+import { BackgroundImage, ButtonLink } from './ui';
+
+import { useWindowSize } from './hooks';
+
+const Home = () => {
   const { width = 0 } = useWindowSize();
 
   return (
     <main className={styles.main}>
       <BackgroundImage
         image={{
-          src: "/hand.svg",
-          alt: "Hello my friend",
+          src: '/hand.svg',
+          alt: 'Hello my friend',
         }}
         width={width < 768 ? 290 : 630}
         height={width < 768 ? 190 : 370}
@@ -24,4 +27,5 @@ export default function Home() {
       </div>
     </main>
   );
-}
+};
+export default Home;

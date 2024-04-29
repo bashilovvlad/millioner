@@ -1,6 +1,8 @@
-import Image from "next/image";
+import React from 'react';
 
-import styles from "./backgroundImage.module.css";
+import Image from 'next/image';
+
+import styles from './backgroundImage.module.css';
 
 interface IButtonProps {
   children?: React.ReactNode;
@@ -17,19 +19,17 @@ export const BackgroundImage: React.FC<IButtonProps> = ({
   image,
   width,
   height,
-}) => {
-  return (
-    <div className={styles.relative}>
-      <div className={styles.imageHolder}>
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={width}
-          height={height}
-          className={styles.object}
-        />
-      </div>
-      <div className="z-10">{children}</div>
+}) => (
+  <div className={styles.relative}>
+    <div className={styles.imageHolder}>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={width}
+        height={height}
+        className={styles.object}
+      />
     </div>
-  );
-};
+    <div className="z-10">{children}</div>
+  </div>
+);
