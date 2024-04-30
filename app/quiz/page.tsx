@@ -59,20 +59,20 @@ const Quiz = () => {
       resolver: () => {
         context.setReward(game.getReward());
 
-        if (game.getFinish()) {
-          game.resetGame();
+        if (game.isFinished()) {
+          // game.resetGame();
           router.push('/win');
           return;
         }
 
-        if (game.getContinue()) {
+        if (game.isContinue()) {
           game.next();
           setSelected(null);
           setCorrect(null);
           setIncorrect(null);
           setWaiting(false);
         } else {
-          game.resetGame();
+          // game.resetGame();
           router.push('/fail');
         }
       },

@@ -6,6 +6,13 @@ export interface IQuestion {
   id: number;
 }
 
+enum GameState {
+  NOT_STARTED,
+  IN_PROGRESS,
+  WON,
+  LOST,
+}
+
 export class MillionaireGame {
   questionNumber: number = 0;
 
@@ -16,6 +23,8 @@ export class MillionaireGame {
   questions: IQuestion[] = [];
 
   continue: boolean = false;
+
+  status = GameState.NOT_STARTED;
 
   constructor(maxQuestions: number, questions: IQuestion[]) {
     this.maxQuestions = maxQuestions;
@@ -28,7 +37,7 @@ export class MillionaireGame {
   }
 
   getReward() {
-    return this.getFinish() ? this.getCurrentQuestion().reward : this.reward;
+    return this.isFinished() ? this.getCurrentQuestion().reward : this.reward;
   }
 
   resetGame() {
@@ -49,11 +58,11 @@ export class MillionaireGame {
     this.continue = key;
   }
 
-  getContinue() {
+  isContinue() {
     return this.continue;
   }
 
-  getFinish() {
+  isFinished() {
     return this.questionNumber === this.maxQuestions - 1;
   }
 

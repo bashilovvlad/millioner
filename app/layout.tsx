@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { RewardContext } from './app_context';
@@ -13,11 +13,11 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   const [reward, setReward] = useState(0);
-  const value = useMemo(() => ({ reward, setReward }), []);
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RewardContext.Provider value={value}>
+        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+        <RewardContext.Provider value={{ reward, setReward }}>
           {children}
         </RewardContext.Provider>
       </body>
