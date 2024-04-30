@@ -134,8 +134,8 @@
   position: absolute;
   transform: rotate(-45deg);
   z-index: 0;
-  top: 11px;
-  left: -22px;
+  top: 10px;
+  left: -23px;
 }
 
 .button:after {
@@ -149,8 +149,8 @@
   position: absolute;
   transform: rotate(45deg);
   z-index: 0;
-  top: 11px;
-  right: -22px;
+  top: 10px;
+  right: -23px;
 }
 
 .button:hover {

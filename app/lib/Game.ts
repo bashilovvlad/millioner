@@ -6,7 +6,7 @@ export interface IQuestion {
   id: number;
 }
 
-enum GameState {
+export enum GameState {
   NOT_STARTED,
   IN_PROGRESS,
   WON,
@@ -22,14 +22,12 @@ export class MillionaireGame {
 
   questions: IQuestion[] = [];
 
-  continue: boolean = false;
-
   status = GameState.NOT_STARTED;
 
   constructor(maxQuestions: number, questions: IQuestion[]) {
     this.maxQuestions = maxQuestions;
     this.questions = questions.slice(0, maxQuestions);
-    this.continue = true;
+    this.status = GameState.IN_PROGRESS;
   }
 
   getCurrentQuestion() {
@@ -37,13 +35,21 @@ export class MillionaireGame {
   }
 
   getReward() {
-    return this.isFinished() ? this.getCurrentQuestion().reward : this.reward;
+    if (this.isWon()) {
+      this.reward = this.getCurrentQuestion().reward;
+    }
+
+    if (this.isLost()) {
+      this.reward = this.questionNumber === 0 ? 0 : this.questions[this.questionNumber - 1].reward;
+    }
+
+    return this.reward;
   }
 
   resetGame() {
     this.questionNumber = 0;
     this.reward = 0;
-    this.continue = true;
+    this.status = GameState.NOT_STARTED;
   }
 
   getMaxquestions() {
@@ -54,24 +60,25 @@ export class MillionaireGame {
     return this.questions;
   }
 
-  setContinue(key: boolean) {
-    this.continue = key;
-  }
-
-  isContinue() {
-    return this.continue;
+  setStatus(status: number) {
+    this.status = status;
   }
 
   isFinished() {
-    return this.questionNumber === this.maxQuestions - 1;
+    return this.status === GameState.LOST || this.status === GameState.WON;
+  }
+
+  isWon() {
+    return this.status === GameState.WON;
+  }
+
+  isLost() {
+    return this.status === GameState.LOST;
   }
 
   next() {
     if (this.questionNumber < this.maxQuestions) {
-      this.reward = this.getCurrentQuestion().reward;
       this.questionNumber += 1;
-      return true;
     }
-    return false;
   }
 }

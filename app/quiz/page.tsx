@@ -8,7 +8,7 @@ import styles from './page.module.css';
 
 import data from '../../public/data.json';
 
-import { MillionaireGame } from '../lib/Game';
+import { GameState, MillionaireGame } from '../lib/Game';
 import { AnswerButton, MoneySlot } from '../ui';
 
 import { RewardContext } from '../app_context';
@@ -47,11 +47,15 @@ const Quiz = () => {
 
         if (correctAnswer !== answerIndex) {
           setIncorrect(answerIndex);
-          game.setContinue(false);
+          setCorrect(correctAnswer);
+          game.setStatus(GameState.LOST);
+          return;
         }
         setCorrect(correctAnswer);
 
-        return answerIndex;
+        if (game.questionNumber + 1 === game.maxQuestions) {
+          game.setStatus(GameState.WON);
+        }
       },
       timeout: 1000,
     },
@@ -59,13 +63,13 @@ const Quiz = () => {
       resolver: () => {
         context.setReward(game.getReward());
 
-        if (game.isFinished()) {
+        if (game.isWon()) {
           // game.resetGame();
           router.push('/win');
           return;
         }
 
-        if (game.isContinue()) {
+        if (!game.isFinished()) {
           game.next();
           setSelected(null);
           setCorrect(null);
@@ -118,7 +122,7 @@ const Quiz = () => {
         <div className={styles.mainHolder}>
           <p className={styles.question}>{currentQuestion.question}</p>
           <div className={styles.buttons}>
-            {currentQuestion?.answers.map((answer, i) => (
+            {currentQuestion.answers.map((answer, i) => (
               <AnswerButton
                 key={`${answer}`}
                 prefix={PREFIXES[i]}
